@@ -30,7 +30,16 @@ axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
 
     // Receive robot controls
     socket.on('robot-control', (data) => {
+      console.log('===============');
       console.log(data);
+      console.log('----');
+      const motorState = motor.getMotorsState(data);
+      console.log(motorState);
+      console.log('----');
+      const pinState = motor.getPinState(motorState);
+      console.log(pinState);
+      motor.handlePinState(pinState);
+      console.log('===============');
     });
 
     const port = process.env.PORT;
