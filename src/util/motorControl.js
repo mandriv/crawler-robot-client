@@ -29,63 +29,70 @@ export function isInRange(value, lower, upper) {
 
 // F - forwards, B - backwards, I - idle
 export function getMotorsState(state) {
-  const { angle } = state;
+  const { power, angle } = state;
+  const powerNum = Number(power);
   const angleNum = Number(angle);
+  if (power === 0) {
+    return {
+      left: 'I',
+      right: 'I',
+    };
+  }
   if (Number.isNaN(angleNum)) throw new Error('Invalid angle!');
   // →
   if (isInRange(angle, 337.5, 360) || isInRange(angle, 0, 22.5)) {
     return {
       left: 'F',
-      rigth: 'B',
+      right: 'B',
     };
   }
   // ↗
   if (isInRange(angle, 22.5, 67.5)) {
     return {
       left: 'F',
-      rigth: 'I',
+      right: 'I',
     };
   }
   // ↑
   if (isInRange(angle, 67.5, 112.5)) {
     return {
       left: 'F',
-      rigth: 'F',
+      right: 'F',
     };
   }
   // ↖
   if (isInRange(angle, 112.5, 157.5)) {
     return {
       left: 'I',
-      rigth: 'F',
+      right: 'F',
     };
   }
   // ←
   if (isInRange(angle, 157.5, 202.5)) {
     return {
       left: 'B',
-      rigth: 'F',
+      right: 'F',
     };
   }
   // ↙
   if (isInRange(angle, 202.5, 247.5)) {
     return {
       left: 'I',
-      rigth: 'B',
+      right: 'B',
     };
   }
   // ↓
   if (isInRange(angle, 247.5, 292.5)) {
     return {
       left: 'B',
-      rigth: 'B',
+      right: 'B',
     };
   }
   // ↘
   if (isInRange(angle, 292.5, 337.5)) {
     return {
       left: 'B',
-      rigth: 'I',
+      right: 'I',
     };
   }
 }
@@ -122,5 +129,5 @@ export function handlePinState(pinState) {
   leftMotorPin1.writeSync(pinState.left1);
   leftMotorPin2.writeSync(pinState.left2);
   rightMotorPin1.writeSync(pinState.right1);
-  rightMotorPin2.writeSync(pinState.rigth2);
+  rightMotorPin2.writeSync(pinState.right2);
 }
