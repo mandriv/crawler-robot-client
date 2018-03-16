@@ -125,9 +125,9 @@ export function getPinState(motorsState) {
   return pinState;
 }
 
-export function handlePinState(pinState) {
-  leftMotorPin1.writeSync(pinState.left1);
-  leftMotorPin2.writeSync(pinState.left2);
-  rightMotorPin1.writeSync(pinState.right1);
-  rightMotorPin2.writeSync(pinState.right2);
+export function handlePinState(pinState, cb) {
+  leftMotorPin1.write(pinState.left1, cb);
+  leftMotorPin2.write(pinState.left2, cb);
+  rightMotorPin1.write(pinState.right1, cb);
+  rightMotorPin2.write(pinState.right2, cb);
 }

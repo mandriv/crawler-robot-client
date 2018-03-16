@@ -38,7 +38,9 @@ axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
       console.log('----');
       const pinState = motor.getPinState(motorState);
       console.log(pinState);
-      motor.handlePinState(pinState);
+      motor.handlePinState(pinState, (err) => {
+        console.log(err);
+      });
       console.log('===============');
     });
 
