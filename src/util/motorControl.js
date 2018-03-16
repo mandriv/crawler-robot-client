@@ -6,6 +6,7 @@ if (process.env.NODE_EVN === 'production') {
   class Gpio {
 
     writeSync = () => null;
+    write = () => null;
 
   }
   onoff = { Gpio };
