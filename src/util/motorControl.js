@@ -11,6 +11,8 @@ if (process.env.NODE_EVN === 'production') {
   onoff = { Gpio };
 }
 
+console.log(onoff);
+
 // pin numbers
 export const LEFT_MOTOR_PIN_1_NUMBER = 17; // corresponding to pin 2 on h bridge
 export const LEFT_MOTOR_PIN_2_NUMBER = 27; // corresponding to pin 7
@@ -18,6 +20,7 @@ export const RIGHT_MOTOR_PIN_1_NUMBER = 9; // pin 10
 export const RIGHT_MOTOR_PIN_2_NUMBER = 11; // pin 15
 // gpio
 const { Gpio } = onoff;
+console.log(Gpio);
 export const leftMotorPin1 = new Gpio(LEFT_MOTOR_PIN_1_NUMBER, 'out');
 export const leftMotorPin2 = new Gpio(LEFT_MOTOR_PIN_2_NUMBER, 'out');
 export const rightMotorPin1 = new Gpio(RIGHT_MOTOR_PIN_1_NUMBER, 'out');
@@ -126,6 +129,7 @@ export function getPinState(motorsState) {
 }
 
 export function handlePinState(pinState, cb) {
+  console.log(leftMotorPin1);
   leftMotorPin1.write(pinState.left1, cb);
   leftMotorPin2.write(pinState.left2, cb);
   rightMotorPin1.write(pinState.right1, cb);
