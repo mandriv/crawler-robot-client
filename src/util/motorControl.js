@@ -1,5 +1,5 @@
 let onoff;
-if (process.env.NODE_EVN === 'production') {
+if (process.env.NODE_ENV === 'production') {
   import('onoff').then(oo => onoff = oo); // eslint-disable-line
 } else {
   // mock onoff
