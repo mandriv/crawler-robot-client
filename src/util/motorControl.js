@@ -9,6 +9,7 @@ if (process.env.NODE_EVN === 'production') {
 
   }
   onoff = { Gpio };
+  console.log('fuck');
 }
 
 console.log(onoff);
