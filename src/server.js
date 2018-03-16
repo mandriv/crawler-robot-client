@@ -38,18 +38,13 @@ axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
         semaphoreClosed = false;
       }, 100);
       // Motor handling
-      console.log('===============');
-      console.log(data);
-      console.log('----');
       const motorState = motor.getMotorsState(data);
-      console.log(motorState);
-      console.log('----');
       const pinState = motor.getPinState(motorState);
-      console.log(pinState);
       motor.handlePinState(pinState, (err) => {
-        console.log(err);
+        if (err) {
+          console.log(err);
+        }
       });
-      console.log('===============');
     });
 
     const port = process.env.PORT;
