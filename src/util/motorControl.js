@@ -1,19 +1,4 @@
-let onoff;
-if (process.env.NODE_ENV === 'production') {
-  import('onoff').then(oo => onoff = oo); // eslint-disable-line
-} else {
-  // mock onoff
-  class Gpio {
-
-    writeSync = () => null;
-    write = () => null;
-
-  }
-  onoff = { Gpio };
-  console.log('fuck');
-}
-
-console.log(onoff);
+const Gpio = require('onoff').Gpio;
 
 // pin numbers
 export const LEFT_MOTOR_PIN_1_NUMBER = 17; // corresponding to pin 2 on h bridge
@@ -21,7 +6,6 @@ export const LEFT_MOTOR_PIN_2_NUMBER = 27; // corresponding to pin 7
 export const RIGHT_MOTOR_PIN_1_NUMBER = 9; // pin 10
 export const RIGHT_MOTOR_PIN_2_NUMBER = 11; // pin 15
 // gpio
-const { Gpio } = onoff;
 console.log(Gpio);
 export const leftMotorPin1 = new Gpio(LEFT_MOTOR_PIN_1_NUMBER, 'out');
 export const leftMotorPin2 = new Gpio(LEFT_MOTOR_PIN_2_NUMBER, 'out');
