@@ -43,7 +43,6 @@ export const getStreamRouteHandler = (socket, robotID) => (req) => {
   req.connection.setTimeout(0);
   // emit data
   req.on('data', (buffer) => {
-    console.log(buffer);
     socket.emit('video-stream', {
       robotID,
       buffer,
