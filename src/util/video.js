@@ -1,5 +1,5 @@
 import events from 'events';
-import child from 'child_process';
+import { spawn } from 'child_process';
 
 const port = process.env.PORT || 3001;
 
@@ -34,10 +34,7 @@ export const init = (cfg = DEFAULT_CONFIG) => {
   const bitrate = `-b:v ${cfg.bitrate} -bf 0`;
   const { url } = cfg;
   const args = `${formatIn} ${framerate} ${sizeIn} ${input} ${formatOut} ${codec} ${sizeOut} ${bitrate} ${url}`;
-  console.log('args:');
-  console.log(args);
-
-  const avconv = child.spawn('avconv', args);
+  const avconv = spawn('avconv', args.split(' '));
   avconv.on('close', () => console.log('avconc failed')); // eslint-disable-line
 };
 
