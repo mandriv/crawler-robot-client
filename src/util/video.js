@@ -25,15 +25,15 @@ export const init = (cfg = DEFAULT_CONFIG) => {
   console.log('Starting avconv...') // eslint-disable-line
 
   const formatIn = `-f ${cfg.formatIn}`;
-  const framerate = `-framerate ${cfg.framerate}`;
-  const sizeIn = `-video_size ${cfg.videoSize}`;
+  // const framerate = `-framerate ${cfg.framerate}`;
+  // const sizeIn = `-video_size ${cfg.videoSize}`;
   const input = `-i ${cfg.dir}`;
   const formatOut = `-f ${cfg.formatOut}`;
   const codec = '-codec:v mpeg1video';
-  const sizeOut = `-s ${cfg.videoSize}`;
-  const bitrate = `-b:v ${cfg.bitrate} -bf 0`;
-  const { url } = cfg;
-  const args = `${formatIn} ${framerate} ${sizeIn} ${input} ${formatOut} ${codec} ${sizeOut} ${bitrate} ${url}`;
+  // const sizeOut = `-s ${cfg.videoSize}`;
+  // const bitrate = `-b:v ${cfg.bitrate} -bf 0`;
+  const url = `-an ${cfg.url}`;
+  const args = `${formatIn} ${input} ${formatOut} ${codec} ${url}`;
 
   const avconv = spawn('avconv', args.split(' '));
   avconv.on('close', () => console.log('avconc failed')); // eslint-disable-line
