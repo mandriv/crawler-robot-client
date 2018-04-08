@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import envCheck from './util/envCheck'; // eslint-disable-line
 import * as motor from './util/motorControl';
-import * as vid from './util/video';
+import * as video from './util/video';
 
 const app = express();
 const server = http.Server(app);
@@ -20,7 +20,7 @@ const credentials = {
 // Login
 axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
   .then((response) => {
-    console.log(response);
+    video.init();
     // ----------------------------------
     // --------Server code---------------
     // ----------------------------------
@@ -39,7 +39,8 @@ axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
     });
 
     // handle incoming video stream
-    app.all('stream', vid.getStreamRouteHandler(socket, 0));
+    const robotID = response.data.crawler.id;
+    app.all('stream', video.getStreamRouteHandler(socket, robotID));
 
     const port = process.env.PORT;
     server.listen(port || 3001, () => {
