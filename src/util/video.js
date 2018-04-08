@@ -34,18 +34,16 @@ export const init = (cfg = DEFAULT_CONFIG) => {
   const bitrate = `-b:v ${cfg.bitrate} -bf 0`;
   const { url } = cfg;
   const args = `${formatIn} ${framerate} ${sizeIn} ${input} ${formatOut} ${codec} ${sizeOut} ${bitrate} ${url}`;
+
   const avconv = spawn('avconv', args.split(' '));
   avconv.on('close', () => console.log('avconc failed')); // eslint-disable-line
 };
 
 export const getStreamRouteHandler = (socket, robotID) => (req) => {
-  // init emiiter
-  req.Emitter = new events.EventEmitter().setMaxListeners(0);
   req.connection.setTimeout(0);
   // emit data
   req.on('data', (buffer) => {
     console.log(buffer);
-    req.Emitter.emit('data', buffer);
     socket.emit('video-stream', {
       robotID,
       buffer,
