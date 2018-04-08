@@ -117,10 +117,6 @@ export function getPinState(motorsState) {
     left2: 0,
     right1: 0,
     right2: 0,
-    pwr3: Number(power4Bit.charAt(0)),
-    pwr2: Number(power4Bit.charAt(1)),
-    pwr1: Number(power4Bit.charAt(2)),
-    pwr0: Number(power4Bit.charAt(3)),
   };
 
   if (left === 'F') {
@@ -138,8 +134,24 @@ export function getPinState(motorsState) {
     pinState.right1 = 0;
     pinState.right2 = 1;
   }
+  if (power4Bit) {
+    return {
+      ...pinState,
+      pwr3: Number(power4Bit.charAt(0)),
+      pwr2: Number(power4Bit.charAt(1)),
+      pwr1: Number(power4Bit.charAt(2)),
+      pwr0: Number(power4Bit.charAt(3)),
+    };
+  }
 
-  return pinState;
+  // fuck up
+  return {
+    ...pinState,
+    pwr3: 0,
+    pwr2: 0,
+    pwr1: 0,
+    pwr0: 0,
+  };
 }
 
 export function handlePinState(pinState) {
