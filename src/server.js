@@ -33,11 +33,7 @@ axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
       // Motor handling
       const motorState = motor.getMotorsState(data);
       const pinState = motor.getPinState(motorState);
-      motor.handlePinState(pinState, (err) => {
-        if (err) {
-          console.warn(err);
-        }
-      });
+      motor.handlePinState(pinState);
     });
 
     const port = process.env.PORT;
