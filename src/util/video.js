@@ -26,7 +26,7 @@ export const init = (cfg = DEFAULT_CONFIG) => {
 
   const formatIn = `-f ${cfg.formatIn}`;
   const framerate = `-framerate ${cfg.framerate}`;
-  const sizeIn = `-video-size ${cfg.videoSize}`;
+  const sizeIn = `-video_size ${cfg.videoSize}`;
   const input = `-i ${cfg.dir}`;
   const formatOut = `-f ${cfg.formatOut}`;
   const codec = '-codec:v mpeg1video';
@@ -49,8 +49,8 @@ export const getStreamRouteHandler = (socket, robotID) => (req) => {
   req.on('data', (buffer) => {
     console.log(buffer);
     req.Emitter.emit('data', buffer);
-    socket.emit(`stream-${robotID}`, {
-      feed: req.params.feed,
+    socket.emit('video-stream', {
+      robotID,
       buffer,
     });
   });
