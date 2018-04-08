@@ -16,7 +16,6 @@ const credentials = {
   id: process.env.ROBOT_ID,
   key: process.env.ROBOT_KEY,
 };
-let semaphoreClosed = false;
 // Login
 axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
   .then((response) => {
@@ -31,18 +30,12 @@ axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
 
     // Receive robot controls
     socket.on('robot-control', (data) => {
-      // Throttling
-      if (semaphoreClosed) return;
-      semaphoreClosed = true;
-      setTimeout(() => {
-        semaphoreClosed = false;
-      }, 100);
       // Motor handling
       const motorState = motor.getMotorsState(data);
       const pinState = motor.getPinState(motorState);
       motor.handlePinState(pinState, (err) => {
         if (err) {
-          console.log(err);
+          console.warn(err);
         }
       });
     });
