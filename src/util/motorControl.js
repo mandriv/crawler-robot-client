@@ -23,11 +23,11 @@ export function isInRange(value, lower, upper) {
   return value >= lower && value < upper;
 }
 
-export function map(num, inMin = 0, inMax = 100, outMin = 0, outMax = 15) {
+export function map(num = 0, inMin = 0, inMax = 100, outMin = 0, outMax = 15) {
   return Math.round((((num - inMin) * (outMax - outMin)) / (inMax - inMin)) + outMin);
 }
 
-export function to4BitUnsigned(num) {
+export function to4BitUnsigned(num = 0) {
   return Number(num).toString(2).padStart(4, '0');
 }
 
@@ -37,14 +37,14 @@ export function getMotorsState(state) {
   const { power, angle } = state;
   const powerNum = Number(power);
   const angleNum = Number(angle);
-  if (power === 0) {
+  // gracefull error handling
+  if (power === 0 || Number.isNaN(angleNum) || Number.isNaN(angleNum)) {
     return {
       left: 'I',
       right: 'I',
-      power4Bit: to4BitUnsigned(map(powerNum)),
+      power4Bit: '0000',
     };
   }
-  if (Number.isNaN(angleNum)) throw new Error('Invalid angle!');
   // →
   if (isInRange(angle, 337.5, 360) || isInRange(angle, 0, 22.5)) {
     return {
@@ -98,6 +98,7 @@ export function getMotorsState(state) {
     return {
       left: 'B',
       right: 'B',
+      power4Bit: to4BitUnsigned(map(powerNum)),
     };
   }
   // ↘
@@ -134,23 +135,13 @@ export function getPinState(motorsState) {
     pinState.right1 = 0;
     pinState.right2 = 1;
   }
-  if (power4Bit) {
-    return {
-      ...pinState,
-      pwr3: Number(power4Bit.charAt(0)),
-      pwr2: Number(power4Bit.charAt(1)),
-      pwr1: Number(power4Bit.charAt(2)),
-      pwr0: Number(power4Bit.charAt(3)),
-    };
-  }
 
-  // fuck up
   return {
     ...pinState,
-    pwr3: 0,
-    pwr2: 0,
-    pwr1: 0,
-    pwr0: 0,
+    pwr3: Number(power4Bit.charAt(0)),
+    pwr2: Number(power4Bit.charAt(1)),
+    pwr1: Number(power4Bit.charAt(2)),
+    pwr0: Number(power4Bit.charAt(3)),
   };
 }
 
