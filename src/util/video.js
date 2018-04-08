@@ -3,7 +3,7 @@ import child from 'child_process';
 
 const port = process.env.PORT || 3001;
 
-export const FORMAT_IN = 'v4l2';
+export const FORMAT_IN = 'video4linux2';
 export const CAMERA_DIR = '/dev/video0';
 export const FRAMERATE = 30;
 export const VIDEO_SIZE = '640x480';
