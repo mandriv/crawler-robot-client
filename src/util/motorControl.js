@@ -146,12 +146,12 @@ export function handlePinState(pinState) {
   function cb(err) {
     if (err) console.warn(err);
   }
-  leftMotorPin1.write(pinState.left1, cb);
-  leftMotorPin2.write(pinState.left2, cb);
-  rightMotorPin1.write(pinState.right1, cb);
-  rightMotorPin2.write(pinState.right2, cb);
-  pwr3.write(pinState.pwr3, cb);
-  pwr2.write(pinState.pwr2, cb);
-  pwr1.write(pinState.pwr1, cb);
-  pwr0.write(pinState.pwr0, cb);
+  leftMotorPin1.write(pinState.left1 || 0, cb);
+  leftMotorPin2.write(pinState.left2 || 0, cb);
+  rightMotorPin1.write(pinState.right1 || 0, cb);
+  rightMotorPin2.write(pinState.right2 || 0, cb);
+  pwr3.write(pinState.pwr3 || 0, cb);
+  pwr2.write(pinState.pwr2 || 0, cb);
+  pwr1.write(pinState.pwr1 || 0, cb);
+  pwr0.write(pinState.pwr0 || 0, cb);
 }
