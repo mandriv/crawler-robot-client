@@ -2,14 +2,15 @@ import http from 'http';
 import express from 'express';
 import io from 'socket.io-client';
 import axios from 'axios';
+import WebSocket from 'ws';
 
 import envCheck from './util/envCheck'; // eslint-disable-line
 import * as motor from './util/motorControl';
-// import * as video from './util/video';
+import * as video from './util/video';
 
 const app = express();
 const server = http.Server(app);
-const socket = io(process.env.API_HOST, {
+const socket = io(process.env.CONTROL_SOCKET_HOST, {
   transports: ['websocket'],
 });
 
@@ -40,8 +41,8 @@ axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
     });
 
     // handle incoming video stream
-    // const robotID = response.data.crawler.id;
-    // app.all('/stream', video.getStreamRouteHandler(socket, robotID));
+    const robotID = response.data.crawler.id;
+    app.all('/stream', video.getStreamRouteHandler(robotID));
 
     const port = process.env.PORT;
     server.listen(port || 3001, () => {

@@ -8,6 +8,8 @@ function envCheck() {
   const requiredFields = [
     'NODE_ENV',
     'PORT',
+    'CONTROL_SOCKET_HOST',
+    'VIDEO_WEBSOCKET_HOST',
     'API_HOST',
     'ROBOT_ID',
     'ROBOT_KEY',
