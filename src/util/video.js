@@ -1,5 +1,8 @@
 import events from 'events';
 import { spawn } from 'child_process';
+import WebSocket from 'ws';
+
+const ws = new WebSocket(process.env.VIDEO_WEBSOCKET_HOST);
 
 const port = process.env.PORT || 3001;
 
@@ -39,7 +42,7 @@ export const init = (cfg = DEFAULT_CONFIG) => {
   avconv.on('close', () => console.log('avconc failed')); // eslint-disable-line
 };
 
-export const getStreamRouteHandler = (socket, robotID) => (req) => {
+export const getStreamRouteHandler = robotID => (req) => {
   req.connection.setTimeout(0);
-  req.on('data', buffer => socket.emit('video-stream', { robotID, buffer }));
+  req.on('data', buffer => ws.send('video-stream', { robotID, buffer }));
 };
