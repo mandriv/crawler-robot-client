@@ -20,7 +20,8 @@ const credentials = {
 // Login
 axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
   .then((response) => {
-    // video.init();
+    // Start streaming video
+    video.init();
     // ----------------------------------
     // --------Server code---------------
     // ----------------------------------
