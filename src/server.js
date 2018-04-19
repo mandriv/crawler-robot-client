@@ -41,7 +41,7 @@ axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
 
     // handle incoming video stream
     const robotID = response.data.crawler.id;
-    app.all('/stream', video.getStreamRouteHandler(robotID));
+    app.all('/stream', video.getStreamRouteHandler(socket, robotID));
 
     const port = process.env.PORT;
     server.listen(port || 3001, () => {
