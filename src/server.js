@@ -2,7 +2,6 @@ import http from 'http';
 import express from 'express';
 import io from 'socket.io-client';
 import axios from 'axios';
-import WebSocket from 'ws';
 
 import envCheck from './util/envCheck'; // eslint-disable-line
 import * as motor from './util/motorControl';
