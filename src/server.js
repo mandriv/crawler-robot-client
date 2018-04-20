@@ -22,7 +22,6 @@ axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
   .then((response) => {
     // Start Streaming!
     const robotID = response.data.crawler.id;
-    video.init();
     video.startStreaming(socket, robotID);
     // ----------------------------------
     // --------Server code---------------
