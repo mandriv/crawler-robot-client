@@ -2,7 +2,7 @@ import { spawn } from 'child_process';
 import fs from 'fs';
 import ss from 'socket.io-stream';
 
-const FILEPATH = '~/out.jpg';
+const FILEPATH = '/home/pi/out.jpg';
 
 export const startStreaming = (socket, robotID) => {
   console.log('taking photo');
