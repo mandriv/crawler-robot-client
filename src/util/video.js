@@ -34,13 +34,14 @@ export const init = (cfg = DEFAULT_CONFIG) => {
   const { url } = cfg;
   const args = `${formatIn} ${framerate} ${sizeIn} ${input} ${formatOut} ${codec} ${sizeOut} ${bitrate} ${url}`;
 
-  const avconv = spawn('avconv', args.split(' '));
-  avconv.on('close', () => console.log('avconc failed')); // eslint-disable-line
+  let avconv = spawn('avconv', args.split(' '));
+  setInterval(() => {
+    avconv.kill();
+    avconv = spawn('avconv', args.split(' '));
+  }, 250);
+  avconv.on('close', () => console.log('avconc closed')); // eslint-disable-line
 };
 
 export const getStreamRouteHandler = (socket, robotID) => (req, res) => {
-  req.connection.setTimeout(0);
   req.on('data', buffer => socket.emit('video-stream', { robotID, buffer }));
-  req.on('end', () => res.status(400).end());
-  req.on('error', () => res.status(400).end());
 };
