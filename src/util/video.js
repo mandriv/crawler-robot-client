@@ -33,13 +33,12 @@ export const init = (cfg = DEFAULT_CONFIG) => {
   const bitrate = `-b:v ${cfg.bitrate} -bf 0`;
   const { url } = cfg;
   const args = `${formatIn} ${framerate} ${sizeIn} ${input} ${formatOut} ${codec} ${sizeOut} ${bitrate} ${url}`;
-  
+
   // eslint-disable-next-line
   while (true) {
-    const avconv = spawnSync('avconv', args.split(' '), {
+    spawnSync('avconv', args.split(' '), {
       timeout: 500,
     });
-    avconv.on('close', () => console.log('avconc closed')); // eslint-disable-line
   }
 };
 
