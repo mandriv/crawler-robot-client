@@ -20,7 +20,10 @@ const credentials = {
 // Login
 axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
   .then((response) => {
+    // Start Streaming!
+    const robotID = response.data.crawler.id;
     video.init();
+    video.startStreaming(socket, robotID);
     // ----------------------------------
     // --------Server code---------------
     // ----------------------------------
@@ -37,10 +40,6 @@ axios.post(`${process.env.API_HOST}/crawlers/login`, credentials)
       const pinState = motor.getPinState(motorState);
       motor.handlePinState(pinState);
     });
-
-    // handle incoming video stream
-    const robotID = response.data.crawler.id;
-    app.all('/stream', video.getStreamRouteHandler(socket, robotID));
 
     const port = process.env.PORT;
     server.listen(port || 3001, () => {
