@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { spawnSync } from 'child_process';
 
 const port = process.env.PORT || 3001;
 
@@ -33,13 +33,14 @@ export const init = (cfg = DEFAULT_CONFIG) => {
   const bitrate = `-b:v ${cfg.bitrate} -bf 0`;
   const { url } = cfg;
   const args = `${formatIn} ${framerate} ${sizeIn} ${input} ${formatOut} ${codec} ${sizeOut} ${bitrate} ${url}`;
-
-  let avconv = spawn('avconv', args.split(' '));
-  setInterval(() => {
-    avconv.kill();
-    avconv = spawn('avconv', args.split(' '));
-  }, 250);
-  avconv.on('close', () => console.log('avconc closed')); // eslint-disable-line
+  
+  // eslint-disable-next-line
+  while (true) {
+    const avconv = spawnSync('avconv', args.split(' '), {
+      timeout: 500,
+    });
+    avconv.on('close', () => console.log('avconc closed')); // eslint-disable-line
+  }
 };
 
 export const getStreamRouteHandler = (socket, robotID) => (req, res) => {
