@@ -5,7 +5,6 @@ import ss from 'socket.io-stream';
 const FILEPATH = '/home/pi/out.jpg';
 
 export const startStreaming = (socket, robotID) => {
-  console.log('taking photo');
   const args = `-f video4linux2 -s 640x480 -i /dev/video0 -vframes 1 ${FILEPATH}`;
   spawn('avconv', args.split(' '));
 
@@ -17,8 +16,12 @@ export const startStreaming = (socket, robotID) => {
     readStream.pipe(stream);
     readStream.on('end', () => {
       console.log('stream end');
-      spawn('avconv', args.split(' '));
     });
+  });
+
+  socket.on('video-stream-received', () => {
+    console.log('stream receive, new photo');
+    spawn('avconv', args.split(' '));
   });
 };
 
