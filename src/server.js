@@ -9,7 +9,7 @@ import * as video from './util/video';
 
 const app = express();
 const server = http.Server(app);
-const socket = io(process.env.API_HOST, {
+const socket = io(process.env.CONTROL_SOCKET_HOST, {
   transports: ['websocket'],
 });
 
