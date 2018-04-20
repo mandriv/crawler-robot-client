@@ -6,7 +6,7 @@ export const FORMAT_IN = 'video4linux2';
 export const CAMERA_DIR = '/dev/video0';
 export const FRAMERATE = 25;
 export const VIDEO_SIZE = '640x480';
-export const FORMAT_OUT = 'mpegts';
+export const FORMAT_OUT = 'h264';
 export const BITRATE = '1000k';
 export const URL = `http://localhost:${port}/stream`;
 
