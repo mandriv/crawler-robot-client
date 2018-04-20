@@ -1,13 +1,13 @@
-import { spawnSync } from 'child_process';
+import { spawn } from 'child_process';
 
 const port = process.env.PORT || 3001;
 
 export const FORMAT_IN = 'video4linux2';
 export const CAMERA_DIR = '/dev/video0';
-export const FRAMERATE = 15;
+export const FRAMERATE = 25;
 export const VIDEO_SIZE = '640x480';
 export const FORMAT_OUT = 'mpegts';
-export const BITRATE = '500k';
+export const BITRATE = '1000k';
 export const URL = `http://localhost:${port}/stream`;
 
 export const DEFAULT_CONFIG = {
@@ -34,14 +34,9 @@ export const init = (cfg = DEFAULT_CONFIG) => {
   const { url } = cfg;
   const args = `${formatIn} ${framerate} ${sizeIn} ${input} ${formatOut} ${codec} ${sizeOut} ${bitrate} ${url}`;
 
-  // eslint-disable-next-line
-  while (true) {
-    spawnSync('avconv', args.split(' '), {
-      timeout: 500,
-    });
-  }
+  spawn('avconv', args.split(' '));
 };
 
-export const getStreamRouteHandler = (socket, robotID) => (req, res) => {
+export const getStreamRouteHandler = (socket, robotID) => (req) => {
   req.on('data', buffer => socket.emit('video-stream', { robotID, buffer }));
 };
