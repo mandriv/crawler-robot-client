@@ -38,7 +38,9 @@ export const init = (cfg = DEFAULT_CONFIG) => {
   avconv.on('close', () => console.log('avconc failed')); // eslint-disable-line
 };
 
-export const getStreamRouteHandler = (socket, robotID) => (req) => {
+export const getStreamRouteHandler = (socket, robotID) => (req, res) => {
   req.connection.setTimeout(0);
   req.on('data', buffer => socket.emit('video-stream', { robotID, buffer }));
+  req.on('end', () => res.status(400).end());
+  req.on('error', () => res.status(400).end());
 };
